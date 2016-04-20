@@ -1,5 +1,32 @@
 transformation description
 
+map(func)
+return a new distributed dataset formed by passing
+each element of the source through a function func
+
+filter(func)
+return a new dataset formed by selecting those
+elements of the source on which func returns true
+
+flatMap(func)
+similar to map, but each input item can be mapped
+to 0 or more output items (so func should return a
+Seq rather than a single item)
+
+sample(withReplacement,
+fraction, seed)
+sample a fraction fraction of the data, with or without
+replacement, using a given random number generator
+seed
+
+union(otherDataset)
+return a new dataset that contains the union of the
+elements in the source dataset and the argument
+
+distinct([numTasks]))
+return a new dataset that contains the distinct elements
+of the source dataset
+
 groupByKey([numTasks])
 when called on a dataset of (K, V) pairs, returns a
 dataset of (K, Seq[V]) pairs
