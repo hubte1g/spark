@@ -18,7 +18,7 @@ ur.count()
 hdfs dfs -put /home/localuser/edl-in/test/u.data hdfs://HADOOP/lab/
 
 %pyspark
-movielens = sc.textFile("hdfs://KOHLSEDLPROD1NNHA/kohls/eim/lab/u.data")
+movielens = sc.textFile("hdfs://HADOOP/lab/u.data")
 movielens.count()
 
 movielens.first() #'u '
