@@ -1,2 +1,0 @@
-
-var df : DataFrame = _
