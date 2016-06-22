@@ -1,7 +1,7 @@
 //https://spark.apache.org/docs/1.5.1/api/java/org/apache/spark/sql/DataFrameStatFunctions.html
 
 import org.apache.spark.sql.DataFrame
-import org.apach.spark.sql.DataFrameStatFunctions
+import org.apache.spark.sql.DataFrameStatFunctions
 
 val df = sc.parallelize(0 until 10).toDF("id").withColumn("rand1", rand(seed=10))
       .withColumn("rand2", rand(seed=27))
