@@ -1,4 +1,23 @@
-//Determine the airlines with the greatest number of flights.
+// meta: https://docs.google.com/spreadsheets/d/11qZV5wRRt625oKIlOYCMdTH4-YgQ4o4Te1m38YF33xc/edit#gid=0 
 
-val carrierRdd = sc.textfile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).map(column => (column(5),1))
+/**
+ * Determine the airlines with the greatest number of flights.
+ */
+
+val carrierRdd_split = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).take(5)
+// Array[Array[String]] = Array(Array(Year, Month, DayofMonth, DayOfWeek, DepTime, CRSDepTime, ArrTime, CRSArrTime, UniqueCarrier, FlightNum, TailNum, ActualElapsedTime, CRSElapsedTime, AirTime, ArrDelay, DepDelay, Origin, Dest, Distance, TaxiIn, TaxiOut, Cancelled, CancellationCode, Diverted, CarrierDelay, WeatherDelay, NASDelay, SecurityDelay, LateAircraftDelay), Array(2008, 1, 3, 4, 2003, 1955, 2211, 2225, WN, 335, N712SW, 128, 150, 116, -14, 8, IAD, TPA, 810, 4, 8, 0, "", 0, NA, NA, NA, NA, NA), Array(2008, 1, 3, 4, 754, 735, 1002, 1000, WN, 3231, N772SW, 128, 145, 113, 2, 19, IAD, TPA, 810, 5, 10, 0, "", 0, NA, NA, NA, NA, NA), Array(2008, 1, 3, 4, 628, 620, 804, 750, WN, 448, N428WN, 96, 90, 76, 14, 8, IND, BWI, 515, 3, 17, 0, "", 0, NA, NA, NA, NA, NA), Array(2008,...
+
+val carrierRdd = sc.textfile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).map(column => (column(8),1))
+// Array[(String, Int)] = Array((UniqueCarrier,1), (WN,1), (WN,1), (WN,1), (WN,1))
+
+/* Perform a reduce and sort the results, then display the top three carrier codes by
+ * number of flights based on this data.
+ */
+ 
+val carriersSorted_rbk = carrierRdd.reduceByKey((x,y) => x + y).take(9)
+// carriersSorted_rbk: Array[(String, Int)] = Array((B6,196091), (UA,449515), (DL,451931), (9E,262208), (US,453589), (XE,374510), (F9,95762), (YV,254930), (OH,197607)) 
+// Another way using associative function // val carriersSorted_rbk = carrierRdd.reduceByKey(_ + _).take(100)
+
+val carriersSorted_rbk = carrierRdd.reduceByKey(_ + _).map{ case (a,b) => (b,a) }.sortByKey(ascending = false)
+// Array[(Int, String)] = Array((1201754,WN), (604885,AA), (567159,OO), (490693,MQ), (453589,US), (451931,DL), (449515,UA), (374510,XE), (347652,NW), (298455,CO), (280575,EV), (262208,9E), (261684,FL), (254930,YV), (197607,OH), (196091,B6), (151102,AS), (95762,F9), (61826,HA), (7800,AQ), 
 
