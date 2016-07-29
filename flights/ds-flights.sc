@@ -4,10 +4,10 @@
  * Determine the airlines with the greatest number of flights.
  */
 
-val carrierRdd_split = sc.textFile("../lab/flights.csv").map(x => x.split(",")).take(5)
+val carrierRdd_split = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).take(5)
 // Array[Array[String]] = Array(Array(Year, Month, DayofMonth, DayOfWeek, DepTime, CRSDepTime, ArrTime, CRSArrTime, UniqueCarrier, FlightNum, TailNum, ActualElapsedTime, CRSElapsedTime, AirTime, ArrDelay, DepDelay, Origin, Dest, Distance, TaxiIn, TaxiOut, Cancelled, CancellationCode, Diverted, CarrierDelay, WeatherDelay, NASDelay, SecurityDelay, LateAircraftDelay), Array(2008, 1, 3, 4, 2003, 1955, 2211, 2225, WN, 335, N712SW, 128, 150, 116, -14, 8, IAD, TPA, 810, 4, 8, 0, "", 0, NA, NA, NA, NA, NA), Array(2008, 1, 3, 4, 754, 735, 1002, 1000, WN, 3231, N772SW, 128, 145, 113, 2, 19, IAD, TPA, 810, 5, 10, 0, "", 0, NA, NA, NA, NA, NA), Array(2008, 1, 3, 4, 628, 620, 804, 750, WN, 448, N428WN, 96, 90, 76, 14, 8, IND, BWI, 515, 3, 17, 0, "", 0, NA, NA, NA, NA, NA), Array(2008,...
 
-val carrierRdd = sc.textfile("../lab/flights.csv").map(x => x.split(",")).map(column => (column(8),1))
+val carrierRdd = sc.textfile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).map(column => (column(8),1))
 // Array[(String, Int)] = Array((UniqueCarrier,1), (WN,1), (WN,1), (WN,1), (WN,1))
 
 /* Perform a reduce and sort the results, then display the top three carrier codes by
@@ -26,7 +26,21 @@ val carriersSorted_rbk = carrierRdd.reduceByKey(_ + _).map{ case (a,b) => (b,a) 
  */
  
  // airport code and city
- val cityRdd = sc.textFile("../lab/airports.csv").map(x => x.split(",")).map(column => (column(0), column(2)))
- // origin and destination
- val OrigDestRdd = sc.textFile("../lab/flights.csv").map(x => x.split(",")).map(column => (column(16), column(17)))
+ val cityRdd = sc.textFile("/kohls/eim/lab/airports.csv").map(x => x.split(",")).map(column => (column(0), column(2)))
+ // origin and destination  //  Array[(String, String)] = Array((Origin,Dest), (IAD,TPA), 
+ val OrigDestRdd = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).map(column => (column(16), column(17)))
+ 
+ //origin code as the key, with a value of (destination code, origin city)
+ val origJoinRdd = OrigDestRdd.join(cityRdd) // Array[(String, (String, String))] = Array((RIC,(IAH,Richmond)), 
+ 
+ // use values() to filter out the origin code
+ // k: destination code, v: (origin city, destination city) //  Array[(String, (String, String))] = Array((RIC,(Boston,Richmond))
+ val destOrigJoin = origJoinRdd.values.join(cityRdd)
+ 
+ //  Array[(String, String)] = Array((Boston,Richmond),
+ val citesCleanedRdd = destOrigJoin.values
+ 
+
+ 
+
 
