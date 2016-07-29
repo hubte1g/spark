@@ -52,4 +52,6 @@ val carriersSorted_rbk = carrierRdd.reduceByKey(_ + _).map{ case (a,b) => (b,a) 
 
 // Find the longest departure delays for any airline that experienced a delay of 15 minutes or more.
 // use depDelay and UniqueCarrierID
-val delayRdd = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).filter(delay => (delay(15).toInt) > 15).map(column => (column(8), column(15).toInt))
+//--val delayRdd = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).filter(delay => (delay(15).toInt) > 15).map(column => (column(8), column(15).toInt))
+//--val delayRdd_no_hdr = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).zipWithIndex().filter(_._2 > 0).filter(delay => (delay(15).toInt) > 15).map(column => (column(8), column(15).toInt))
+val delayRdd = sc.textFile("/kohls/eim/lab/flights.csv").mapPartitions(_.drop(1)).map(x => x.split(",")).filter(delay => (delay(15).toInt) > 15).map(column => (column(8), column(15).toInt))
