@@ -1,7 +1,7 @@
 // meta: https://docs.google.com/spreadsheets/d/11qZV5wRRt625oKIlOYCMdTH4-YgQ4o4Te1m38YF33xc/edit#gid=0 
 
 /**
- * Determine the airlines with the greatest number of flights.
+ * 01 Determine the airlines with the greatest number of flights.
  */
 
 val carrierRdd_split = sc.textFile("/../../lab/flights.csv").map(x => x.split(",")).take(5)
@@ -22,13 +22,14 @@ val carriersSorted_rbk = carrierRdd.reduceByKey(_ + _).map{ case (a,b) => (b,a) 
 // Array[(Int, String)] = Array((1201754,WN), (604885,AA), (567159,OO), (490693,MQ), (453589,US), (451931,DL), (449515,UA), (374510,XE), (347652,NW), (298455,CO), (280575,EV), (262208,9E), (261684,FL), (254930,YV), (197607,OH), (196091,B6), (151102,AS), (95762,F9), (61826,HA), (7800,AQ), 
 
 /**
- * Determine the most common routes between two cities. Uses RDD above from flights and also new RDD with airports.
+ * 02 Determine the most common routes between two cities. Uses RDD above from flights and also new RDD with airports.
  */
  
  // airport code and city
  val cityRdd = sc.textFile("/../../lab/airports.csv").map(x => x.split(",")).map(column => (column(0), column(2)))
+ 
  // origin and destination  //  Array[(String, String)] = Array((Origin,Dest), (IAD,TPA), 
- val OrigDestRdd = sc.textFile("/kohls/eim/lab/flights.csv").map(x => x.split(",")).map(column => (column(16), column(17)))
+ val OrigDestRdd = sc.textFile("/../../lab/flights.csv").map(x => x.split(",")).map(column => (column(16), column(17)))
  
  //origin code as the key, with a value of (destination code, origin city)
  val origJoinRdd = OrigDestRdd.join(cityRdd) // Array[(String, (String, String))] = Array((RIC,(IAH,Richmond)), 
