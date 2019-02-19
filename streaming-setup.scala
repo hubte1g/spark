@@ -1,3 +1,4 @@
+// https://blog.clairvoyantsoft.com/productionalizing-spark-streaming-applications-4d1c8711c7b0
 val checkpointDirectory = "hdfs://..."   // define checkpoint directory
 
 // Function to create and setup a new StreamingContext
