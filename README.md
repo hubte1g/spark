@@ -1,3 +1,14 @@
+Spark PR's
+https://spark-prs.appspot.com/open-prs -- participate / get involved with code reviews.
+
+http://spark.apache.org/community.html
+
+https://stackoverflow.com/questions/tagged/apache-spark
+
+
+-----
+https://towardsdatascience.com/recognising-handwritten-digits-with-scala-9829d035f7bc
+
 https://www.mapr.com/blog/spark-streaming-and-twitter-sentiment-analysis
 % spark
 
