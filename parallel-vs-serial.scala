@@ -11,3 +11,15 @@ case class Test(a: Int = Random.nextInt(1000000),
 val input = sc.parallelize(1 to 1000000, 42).map(_ => Test()).persist(DISK_ONLY)
 input.count() // Force initialization
 val shuffled = input.repartition(43).count()
+
+
+/**
+Spark as a distributed computing engine and its main abstraction is a resilient distributed dataset (RDD), which can be viewed as a distributed collection. Basically, RDD's elements are partitioned across the nodes of the cluster, but Spark abstracts this away from the user, letting the user interact with the RDD (collection) as if it were a local one.
+For different transformations on a RDD (map, flatMap, filter and others), your transformation code (closure) is:
+
+1. serialized on the driver node,
+2. shipped to the appropriate nodes in the cluster,
+3. deserialized,
+4. and finally executed on the nodes
+**/
+
