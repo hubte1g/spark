@@ -23,3 +23,23 @@ For different transformations on a RDD (map, flatMap, filter and others), your t
 4. and finally executed on the nodes
 **/
 
+
+val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
+val tbl = sqlContext.table("schema.table")
+
+
+//https://www.youtube.com/watch?v=daXEp4HmS-E
+import scala.collection.parallel._
+import scala.concurrent.forkjoin.ForkJoinPool
+val taskSupport = new ForkJoinTaskSupport(new ForkJoinPool(100))
+
+import scala.collection.mutable.ArrayBuffer
+val parts: ArrayBuffer[monthPart] = ArrayBuffer[monthPart]()
+
+Range(2018,2019).toArray.foreach(yr => {
+      Range(1,13).toArray.foreach(mnth => parts.append(monthPart(yr,mnth)))
+      })
+
+val partMonth = parts.toArray.par
+
+ /...
