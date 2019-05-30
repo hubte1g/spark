@@ -13,7 +13,7 @@ spark.conf.set("spark.sql.shuffle.partitions", n) // :: relate to # cores
 
 df.groupBy("city","state").agg(<f(x)>).orderBy(col.desc)
 
-val saltVal = random(0, spark.conf.get(org....shuffle.partitions) -1)
+val saltVal = random(0, spark.conf.get(org....shuffle.partitions) -1) // random # partitions in shuffle stage; org.apache.spark.sql random (scala random is not vectorized function.)
 
 df.withColumn("salt", lit(saltVal))
   .groupBy("city", "state", "salt")
