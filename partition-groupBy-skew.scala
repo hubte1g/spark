@@ -7,3 +7,16 @@ val definition = input.toDS.groupByKey(_ % 42).reduceGroups(_ + _)
 // - Partition count = Stage Input Data / Target Size: Solve for Partition Count
 // Default is 200.
 spark.conf.set("spark.sql.shuffle.partitions", n) // :: relate to # cores
+
+
+// Handling skewed aggregates
+
+df.groupBy("city","state").agg(<f(x)>).orderBy(col.desc)
+
+val saltVal = random(0, spark.conf.get(org....shuffle.partitions) -1)
+
+df.withColumn("salt", lit(saltVal))
+  .groupBy("city", "state", "salt")
+.agg(<f(x)>)
+.drop("salt")
+.orderBy(col.desc)
