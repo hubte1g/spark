@@ -1,3 +1,10 @@
+import play.api.libs.json._
+
+val appColsStr = """{"COL_NAME"                       : "col_name",
+                    "COL_ID"                         : "col_id" }"""
+val appColsList  = conf_col.getString("appCols.appColsList")
+val appColsMap   = Json.parse(appColsList).as[Map[String, String]]
+
 import org.apache.spark.sql.types._ // https://spark.apache.org/docs/latest/api/java/org/apache/spark/sql/types/package-summary.html
 import org.apache.spark.sql.functions._
 // Our JSON Schema
