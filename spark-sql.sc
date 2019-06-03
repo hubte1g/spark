@@ -1,3 +1,11 @@
+//Unpack values
+
+val df1 = sc.parallelize(Seq(1->2, 2->3, 3->7,5->4,1->3)).toDF("col1","col2")
+val df2 = sc.parallelize(Seq(1->3,5->1)).toDF("col1","col2")
+
+val z = df1.join(df2, cols.map(c => df1(c) === df2(c)).reduce(_ || _) )
+z.select(cols.map(df1(_)) :_*).show
+
 // 'I' compare for scd
 .select(
 
