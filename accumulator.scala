@@ -1,3 +1,13 @@
+import scala.collection._
+
+val logMetadataAccumulator = sc.accumulableCollection(mutable.ArrayBuffer[( 
+  String, String, Long, String, Long, Long)]())
+logMetadataAccumulator += (fileName, logType, numLines, logSource, startTime, endTime)
+                Row( 0L, "blah" "blah", 0L )
+
+
+//
+
 accumulator[T](initialValue: T)(implicit param: AccumulatorParam[T]): Accumulator[T]
 accumulator[T](initialValue: T, name: String)(implicit param: AccumulatorParam[T]): Accumulator[T]
 accumulator methods create accumulators of type T with the initial value initialValue.
