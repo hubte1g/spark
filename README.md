@@ -1,3 +1,14 @@
+Review:
+complexTypeExtractors.scala
+jsonExpressions.scala — StructsToJson
+Functions.scala, generators.scala
+
+— collection accumulator for error-handling
+whenThenCoalesce+MatchCase
+
+-custom explode, join via uff
+
+
 Spark PR's
 https://spark-prs.appspot.com/open-prs -- participate / get involved with code reviews.
 
