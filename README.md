@@ -1,3 +1,26 @@
+
+A.apply() is the same as A() which is the same as A{}. 
+
+DataFrame API is untyped Dataset.
+
+
+From a category theory point of view you would say it "forms" a monad if the necessary functions exist.
+From a class/object point of view you would say it "is" a monad if it has the correct functions as part of it's construction.
+From a scala/cats perspective you'd say it "has" a monad if an instance of Monad exists that defines those function for the type.
+
+Accumulator vs. count
+
+rdd
+Dataframe — Row of generic untyped jam objects, with named col’s
+Dataset — strongly typed, with case class5
+
+UDF, vectorization
+Persist v. broadcast
+
+Trait (no constructor parameters) v. Abstract class
+Object v. Class
+Class v. Abstract class
+
 Review:
 complexTypeExtractors.scala
 jsonExpressions.scala — StructsToJson
